@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 
 const Page1 = ({ navigation }) => (
+  <ScrollView>
   <View style={styles.container}>
     <Text style={styles.logo}>LOGO</Text>
     <View style={styles.containerResto}>
@@ -26,6 +27,7 @@ const Page1 = ({ navigation }) => (
       </TouchableOpacity>
     </View>
   </View>
+  </ScrollView>
 );
 
 const styles = StyleSheet.create({
