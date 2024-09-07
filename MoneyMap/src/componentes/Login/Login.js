@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 
-const Page2 = () => (
+const Page2 = ({ navigation }) => (
     
   <View style={styles.container}>
     <View style={styles.logoVoltar}>
       <Text style={styles.logo}>LOGO</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Inicial')}> 
       <Image
         source={require("../../Imagens/paraLado.png")}
         style={styles.image}
       />
+      </TouchableOpacity>
     </View>
     <View style={styles.containerBaixo}>
       <Text style={styles.titleLogin}>Login</Text>
