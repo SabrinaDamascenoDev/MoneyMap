@@ -77,7 +77,8 @@ const Page2 = ({ navigation }) => (
         <Image source={require("../../Imagens/google.png")}></Image>
         <Text style={styles.textoBtnGoogle}>Entrar com o Google</Text>
       </TouchableOpacity>
-      <Text style={styles.textSemConta}>Ainda não possui uma conta? <Text style={styles.textBold}>Crie uma conta</Text></Text>
+      
+      <Text style={styles.textSemConta}>Ainda não possui uma conta? <TouchableOpacity onPress={() => navigation.navigate('Registre-se')}><Text style={styles.textBold}>Crie uma conta</Text></TouchableOpacity></Text>
     </View>
     
   </View>

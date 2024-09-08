@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Page1 from '../Inicial/Inicial'; // Verifique se o caminho está correto
 import Page2 from '../Login/Login'; // Verifique se o caminho está correto
+import Page3 from '../Registre-se/Registre-se';
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,7 @@ function Routes() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Inicial" component={Page1} />
         <Stack.Screen name="Login" component={Page2} />
+        <Stack.Screen name="Registre-se" component={Page3} />
       </Stack.Navigator>
     </NavigationContainer>
   );
