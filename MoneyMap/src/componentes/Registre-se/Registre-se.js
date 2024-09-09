@@ -81,7 +81,7 @@ const Page3 = ({ navigation }) => (
       </View>
       <TouchableOpacity
         style={styles.buttonLoginGoogle}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("")}
       >
         <Image source={require("../../Imagens/google.png")}></Image>
         <Text style={styles.textoBtnGoogle}>Registre-se com o Google</Text>
