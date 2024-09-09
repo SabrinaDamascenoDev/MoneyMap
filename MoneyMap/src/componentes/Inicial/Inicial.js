@@ -22,7 +22,7 @@ const Page1 = ({ navigation }) => (
       >
         <Text style={styles.textoBtn}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonCadastro}>
+      <TouchableOpacity style={styles.buttonCadastro} onPress={() => navigation.navigate("Registre-se")}>
         <Text style={styles.textoBtn2}>Ainda não possui uma conta?</Text>
       </TouchableOpacity>
     </View>

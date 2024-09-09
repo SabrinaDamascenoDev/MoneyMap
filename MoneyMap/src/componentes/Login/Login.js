@@ -58,7 +58,7 @@ const Page2 = ({ navigation }) => (
 
       </View> 
 
-        <TouchableOpacity
+      <TouchableOpacity
         style={styles.buttonLogin}
         onPress={() => navigation.navigate('Login')}
       >
