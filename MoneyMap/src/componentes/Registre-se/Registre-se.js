@@ -14,7 +14,7 @@ const Page3 = ({ navigation }) => (
   <View style={styles.container}>
     <View style={styles.logoSessao}>
       <Text style={styles.logo}>LOGO</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Inicial")}>
         <Image
           style={styles.imageVoltar}
           source={require("../../Imagens/paraLado.png")}
