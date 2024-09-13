@@ -8,19 +8,7 @@ import {
   StyleSheet,
   ScrollView
 } from "react-native";
-import { initializeApp } from "@react-native-firebase/app";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChange} from '@firebase/auth'
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC8OkMY51zv_7o6YfLaplHoUmoeQUnFI_E",
-  authDomain: "moneymap-198ca.firebaseapp.com",
-  projectId: "moneymap-198ca",
-  storageBucket: "moneymap-198ca.appspot.com",
-  messagingSenderId: "922708214331",
-  appId: "1:922708214331:web:7183d159c575f4d892121e",
-  measurementId: "G-23ZM98M69H"
-
-};
 
 
 const Page3 = ({ navigation }) => (

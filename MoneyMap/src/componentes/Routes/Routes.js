@@ -7,6 +7,7 @@ import Page3 from '../Registre-se/Registre-se';
 
 const Stack = createStackNavigator();
 
+
 function Routes() {
   return (
     <NavigationContainer>
