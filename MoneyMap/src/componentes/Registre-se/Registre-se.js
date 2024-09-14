@@ -1,196 +1,213 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  StyleSheet,
-  ScrollView
-} from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../FirebaseConfig/FirebaseConfig";
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../FirebaseConfig/FirebaseConfig';
 
-const Page3 = ({ navigation }) => {
+const Page2 = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); 
 
-  const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate("Home");
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const handleLogin = useCallback(() => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        navigation.navigate('Login');
+        navigation.navigate("Home");
       })
-      .catch(error => alert(error.message));
-  };
+      .catch(error => {
+        alert(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [email, password, navigation]);
 
-  return(
-  <ScrollView>
-  <View style={styles.container}>
-    <View style={styles.logoSessao}>
-      <Text style={styles.logo}>LOGO</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Inicial")}>
-        <Image
-          style={styles.imageVoltar}
-          source={require("../../Imagens/paraLado.png")}
-        />
-      </TouchableOpacity>
-    </View>
-    <View style={styles.sessaoRegistrar}>
-      <Text style={styles.titleRegis}>Registre-se</Text>
-      <Text style={styles.descricaoRegis}>Bem-vindo(a) ao MoneyMap.</Text>
-    </View>
-    <View style={styles.inputs}>
-      <Text style={styles.textInputTop}>Nome</Text>
-      <View style={styles.input}>
-        <View style={styles.backgroundImage}>
+  return (
+    <View style={styles.container}>
+      <View style={styles.logoVoltar}>
+        <Text style={styles.logo}>LOGO</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Inicial')}>
           <Image
-            style={styles.icone}
-            source={require("../../Imagens/Person.png")}
+            source={require("../../Imagens/paraLado.png")}
+            style={styles.image}
           />
-        </View>
-        <TextInput
-          placeholder="Digite aqui o seu nome"
-          style={styles.textInput}
-        />
-      </View>
-      <Text style={styles.textInputTop}>Email</Text>
-      <View style={styles.input}>
-        <View style={styles.backgroundImage}>
-          <Image
-            style={styles.icone}
-            source={require("../../Imagens/email.png")}
-          />
-        </View>
-        <TextInput
-          placeholder="Digite aqui o seu Emil"
-          style={styles.textInput}
-          value={ email}
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
-      <Text style={styles.textInputTop}>Senha</Text>
-      <View style={styles.input}>
-        <View style={styles.backgroundImage}>
-          <Image
-            style={styles.icone}
-            source={require("../../Imagens/senha.png")}
-          />
-        </View>
-        <TextInput placeholder="*********" style={styles.textInput} 
-         value={ password}
-         onChangeText={text => setPassword(text)}
-          secureTextEntry
-        />
-        <Image
-          style={styles.olho}
-          source={require("../../Imagens/olho.png")}
-        ></Image>
-      </View>
-      <View style={styles.botoes}>
-      <TouchableOpacity
-        style={styles.buttonLogin}
-        onPress={handleSignUp}
-      >
-        <Text style={styles.textoBtn}>Registrar</Text>
-      </TouchableOpacity>
-
-      <View style={styles.linhaGoogle}>
-        <View style={styles.linha} />
-        <Text style={styles.textLinhaGoogle}>ou registrar com</Text>
-        <View style={styles.linha}></View>
-      </View>
-      <TouchableOpacity
-        style={styles.buttonLoginGoogle}
-        onPress={() => navigation.navigate("")}
-      >
-        <Image source={require("../../Imagens/google.png")}></Image>
-        <Text style={styles.textoBtnGoogle}>Registre-se com o Google</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.textSemConta}>
-        Já possui uma conta?{" "}
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.textBold}>Entrar</Text>
         </TouchableOpacity>
-      </Text>
+      </View>
+      <View style={styles.containerBaixo}>
+        <Text style={styles.titleLogin}>Login</Text>
+        <Text style={styles.descricaoLogin}>Bem-vindo(a) de volta ao MoneyMap.</Text>
+
+        <View style={styles.inputs}>
+          <View style={styles.inputEmail}>
+            <Text style={styles.textInputTop}>Email</Text>
+            <View style={styles.inputStyle}>
+              <View style={styles.backgroundEmail}>
+                <Image
+                  style={styles.imagemEmail}
+                  source={require("../../Imagens/email.png")}
+                />
+              </View>
+              <TextInput
+                placeholder='Digite aqui o seu email'
+                style={styles.textInput}
+                value={email}
+                onChangeText={text => setEmail(text)}
+              />
+            </View>
+          </View>
+          <View style={styles.inputSenha}>
+            <Text style={styles.textInputTop}>Senha</Text>
+            <View style={styles.inputStyle}>
+              <View style={styles.backgroundEmail}>
+                <Image
+                  style={styles.imagemEmail}
+                  source={require("../../Imagens/senha.png")}
+                />
+              </View>
+              <TextInput
+                placeholder='*********'
+                value={password}
+                onChangeText={text => setPassword(text)}
+                style={styles.textInput}
+                secureTextEntry
+              />
+              <Image style={styles.olhoImage} source={require("../../Imagens/olho.png")} />
+            </View>
+            <TouchableOpacity>
+              <Text style={styles.senhaEsquecida}>Esqueceu a senha?</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <TouchableOpacity
+          style={styles.buttonLogin}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          <Text style={styles.textoBtn}>{loading ? 'Carregando...' : 'Entrar'}</Text>
+        </TouchableOpacity>
+
+        <View style={styles.linhaGoogle}>
+          <View style={styles.linha} />
+          <Text style={styles.textLinhaGoogle}>ou entre com</Text>
+          <View style={styles.linha} />
+        </View>
+        <TouchableOpacity
+          style={styles.buttonLoginGoogle}
+          onPress={() => navigation.navigate('Login')}
+        >
+          <Image source={require("../../Imagens/google.png")} />
+          <Text style={styles.textoBtnGoogle}>Entrar com o Google</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.textSemConta}>
+          Ainda não possui uma conta?{' '}
+          <TouchableOpacity onPress={() => navigation.navigate('Registre-se')}>
+            <Text style={styles.textBold}>Crie uma conta</Text>
+          </TouchableOpacity>
+        </Text>
+      </View>
     </View>
-    </View>
-  </View>
-  </ScrollView>
-)};
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logoSessao: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "6%",
+  logoVoltar: {
+    marginTop: 30,
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   logo: {
     fontSize: 25,
-    fontWeight: "900",
-    marginLeft: "9%",
+    fontWeight: 'bold',
+    marginLeft: 30,
   },
-  imageVoltar: {
-    marginRight: "9%",
-  },
-  sessaoRegistrar: {
-    marginTop: "7%",
-    alignItems: "center",
-  },
-  titleRegis: {
+  titleLogin: {
     fontSize: 35,
-    fontWeight: "bold",
-    marginBottom: "2%",
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  descricaoRegis: {
-    color: "gray",
+  containerBaixo: {
+    alignItems: 'center',
+    marginTop: 45,
   },
-  inputs: {
-    marginTop: "3%",
+  image: {
+    marginRight: 30,
   },
-  input: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#CBA2CB",
+  descricaoLogin: {
+    color: 'gray',
+  },
+  imagemEmail: {
+    width: 20,
+    height: 20,
+  },
+  inputStyle: {
+    flexDirection: 'row',
+    width: 320,
+    borderColor: '#CBA2CB',
     borderWidth: 0.5,
-    borderRadius: 10,
-    width: "87%",
+    borderRadius: 10, 
+    alignItems: 'center',
+    height: 50
+  },
+  backgroundEmail: {
+    backgroundColor: '#C8A2C8',
+    width: 45,
     height: 50,
-    marginLeft: "6%",
-  },
-  backgroundImage: {
-    backgroundColor: "#C8A2C8",
-    width: "14%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10, 
     borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    padding: 0,
-    marginRight: "3%",
-  },
-  icone: {
-    width: "40%",
-    height: "40%",
+    borderTopLeftRadius: 10
+
   },
   textInput: {
-    flex: 1,
-    padding: 10,
+    flex: 1, 
+    paddingHorizontal: 10, 
   },
-  textInputTop: {
+
+  textInputTop:{
     fontSize: 20,
-    marginLeft: "6.5%",
-    marginBottom: "1%",
-    fontWeight: "100",
-    marginTop: "5%",
+    marginLeft: 2,
+    marginBottom: 5,
+    fontWeight: '100'
+
   },
-  olho: {
-    marginRight: "8%",
+  inputs:{
+    marginTop: 50
+  },
+  inputEmail:{
+
+  },
+
+  inputSenha:{
+    marginTop: 20
+  }, 
+  olhoImage:{
+    marginRight: 20,
+    width: 20,
+    height: 20
+  },
+  senhaEsquecida:{
+    marginTop: 10,
+    marginLeft: 2,
+    fontWeight: '300'
   },
   buttonLogin: {
     backgroundColor: '#C8A2C8',
@@ -207,10 +224,10 @@ const styles = StyleSheet.create({
     color: '#fff', // Adicione cor ao texto
   },
   linha: {
-    height: 1, 
-    width: '30%',
-    backgroundColor: 'gray', 
-    marginVertical: 10, 
+    height: 1, // Espessura da linha
+    width: '30%', // Largura da linha (ajuste conforme necessário)
+    backgroundColor: 'gray', // Cor da linha
+    marginVertical: 10, // Margem acima e abaixo da linha
   },
   linhaGoogle:{
     display: 'flex',
@@ -232,9 +249,9 @@ const styles = StyleSheet.create({
     width: "85%",
     textAlign: "center",
     alignItems: 'center',
-    height: 50, 
+    height: 50, // Defina uma altura fixa
     justifyContent: "center",
-    marginTop: 30,
+    marginTop: 40,
     borderRadius: 25,
   },
   textoBtnGoogle:{
@@ -249,10 +266,8 @@ const styles = StyleSheet.create({
   },
   textBold:{
     fontWeight: '600',
-  },
-  botoes:{
-    alignItems: 'center'
   }
+
 });
 
-export default Page3;
+export default Page2;

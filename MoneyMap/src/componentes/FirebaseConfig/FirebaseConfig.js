@@ -4,7 +4,7 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 
-// Your web app's Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyC8OkMY51zv_7o6YfLaplHoUmoeQUnFI_E",
   authDomain: "moneymap-198ca.firebaseapp.com",
@@ -15,12 +15,12 @@ const firebaseConfig = {
   measurementId: "G-23ZM98M69H"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 
-// Initialize Analytics only if supported
+
 let analytics;
 isSupported().then((supported) => {
   if (supported) {
@@ -28,4 +28,4 @@ isSupported().then((supported) => {
   }
 });
 
-export { auth, analytics };
+export { auth, analytics,  };
