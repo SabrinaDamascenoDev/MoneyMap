@@ -1,22 +1,11 @@
 import React from 'react';
-import Routes from './src/componentes/Routes/Routes';
 import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-
-
-
-const app = initializeApp(FirebaseConfig);
-const auth = getAuth(app);
-
-
+import Routes from './src/componentes/Routes/Routes';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        barStyle="black"
-      />
+      <StatusBar barStyle="black" />
       <Routes />
     </SafeAreaView>
   );

@@ -1,9 +1,34 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../FirebaseConfig/FirebaseConfig';
 
-const Page2 = ({ navigation }) => (
-    
-  <View style={styles.container}>
+const Page2 = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if(user){
+        navigation.navigate("Home");
+      }
+    })
+
+    return unsubscribe;
+  }, [])
+
+  const handleLogin = () => {
+      signInWithEmailAndPassword(auth, email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        navigation.navigate("Home");
+      })
+      .catch(error => alert(error.message));
+  }
+
+  return(
+  <View style={styles.container}>  
+
     <View style={styles.logoVoltar}>
       <Text style={styles.logo}>LOGO</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Inicial')}> 
@@ -30,6 +55,8 @@ const Page2 = ({ navigation }) => (
             <TextInput
                 placeholder='Digite aqui o seu email'
                 style={styles.textInput}
+                value={email}
+                onChangeText={text => setEmail(text)}
             />
            
             </View>
@@ -46,7 +73,10 @@ const Page2 = ({ navigation }) => (
             <TextInput
                 placeholder='*********'
                 type='password'
+                value={password}
+                onChangeText={text => setPassword(text)}
                 style={styles.textInput}
+                secureTextEntry
             />
              <Image style={styles.olhoImage} source={require("../../Imagens/olho.png")}></Image>
             </View>
@@ -60,7 +90,7 @@ const Page2 = ({ navigation }) => (
 
       <TouchableOpacity
         style={styles.buttonLogin}
-        onPress={() => navigation.navigate('Login')}
+        onPress={handleLogin}
       >
         <Text style={styles.textoBtn}>Entrar</Text>
       </TouchableOpacity>
@@ -82,7 +112,7 @@ const Page2 = ({ navigation }) => (
     </View>
     
   </View>
-);
+)};
 
 export default Page2;
 

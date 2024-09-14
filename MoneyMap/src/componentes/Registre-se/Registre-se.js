@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,11 +8,23 @@ import {
   StyleSheet,
   ScrollView
 } from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../FirebaseConfig/FirebaseConfig";
 
+const Page3 = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        navigation.navigate('Login');
+      })
+      .catch(error => alert(error.message));
+  };
 
-const Page3 = ({ navigation }) => (
-  
+  return(
   <ScrollView>
   <View style={styles.container}>
     <View style={styles.logoSessao}>
@@ -53,6 +65,8 @@ const Page3 = ({ navigation }) => (
         <TextInput
           placeholder="Digite aqui o seu Emil"
           style={styles.textInput}
+          value={ email}
+          onChangeText={text => setEmail(text)}
         />
       </View>
       <Text style={styles.textInputTop}>Senha</Text>
@@ -63,7 +77,11 @@ const Page3 = ({ navigation }) => (
             source={require("../../Imagens/senha.png")}
           />
         </View>
-        <TextInput placeholder="*********" style={styles.textInput} />
+        <TextInput placeholder="*********" style={styles.textInput} 
+         value={ password}
+         onChangeText={text => setPassword(text)}
+          secureTextEntry
+        />
         <Image
           style={styles.olho}
           source={require("../../Imagens/olho.png")}
@@ -72,7 +90,7 @@ const Page3 = ({ navigation }) => (
       <View style={styles.botoes}>
       <TouchableOpacity
         style={styles.buttonLogin}
-        onPress={() => navigation.navigate("Login")}
+        onPress={handleSignUp}
       >
         <Text style={styles.textoBtn}>Registrar</Text>
       </TouchableOpacity>
@@ -100,7 +118,7 @@ const Page3 = ({ navigation }) => (
     </View>
   </View>
   </ScrollView>
-);
+)};
 
 const styles = StyleSheet.create({
   container: {
