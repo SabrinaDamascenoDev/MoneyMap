@@ -9,7 +9,7 @@ const Page5 = ({navigation}) => {
     auth
       .signOut()
       .then(() => {
-        navigation.navigate("Inicio");
+        
       })
       .catch(error => alert(error.message));
   }

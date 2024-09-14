@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../FirebaseConfig/FirebaseConfig';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Page2 = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
+  const [showPassword , setShowPassword] = useState(false);
 
-  const handleLogin = () => {
+  const handleShowPass = () => {
+    setShowPassword = (!showPassword);
+  }
+      const handleLogin = () => {
       signInWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
@@ -67,9 +72,9 @@ const Page2 = ({ navigation }) => {
                 value={password}
                 onChangeText={text => setPassword(text)}
                 style={styles.textInput}
-                secureTextEntry
+                secureTextEntry = {!showPassword}
             />
-             <Image style={styles.olhoImage} source={require("../../Imagens/olho.png")}></Image>
+            <MaterialCommunityIcons name={showPassword ? 'eye-off' : 'eye'} size={23} style={styles.olhoImage} onPress={handleShowPass}/>
             </View>
             <TouchableOpacity>
                 <Text style={styles.senhaEsquecida}>Esqueceu a senha?</Text>
@@ -186,8 +191,6 @@ const styles = StyleSheet.create({
   }, 
   olhoImage:{
     marginRight: 20,
-    width: 20,
-    height: 20
   },
   senhaEsquecida:{
     marginTop: 10,
