@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard  } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../FirebaseConfig/FirebaseConfig';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,7 +11,7 @@ const Page2 = ({ navigation }) => {
   const [showPassword , setShowPassword] = useState(false);
 
   const handleShowPass = () => {
-    setShowPassword = (!showPassword);
+    setShowPassword(!showPassword);
   }
       const handleLogin = () => {
       signInWithEmailAndPassword(auth, email, password)
@@ -19,10 +19,18 @@ const Page2 = ({ navigation }) => {
         const user = userCredentials.user;
         navigation.navigate("Home");
       })
-      .catch(error => alert(error.message));
+      .catch(error => {
+        if(error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential'){
+          alert("Senha ou email inválidos!!");
+        }else{
+          alert(error.message);
+        }});
   }
 
   return(
+
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+  <KeyboardAvoidingView style={styles.container} behavior="padding"> 
   <View style={styles.container}>  
 
     <View style={styles.logoVoltar}>
@@ -108,6 +116,8 @@ const Page2 = ({ navigation }) => {
     </View>
     
   </View>
+  </KeyboardAvoidingView>
+  </TouchableWithoutFeedback>
 )};
 
 export default Page2;

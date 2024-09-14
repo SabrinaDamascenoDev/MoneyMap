@@ -10,10 +10,17 @@ import {
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../FirebaseConfig/FirebaseConfig";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Page3 = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState('');
+
+
+  const handleShowPass = () => {
+    setShowPassword(!showPassword);
+  }
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -21,7 +28,15 @@ const Page3 = ({ navigation }) => {
         const user = userCredentials.user;
 
       })
-      .catch(error => alert(error.message));
+      .catch(error => 
+      {
+        if(error.code === 'auth/email-already-in-use'){
+          alert("Email já está em uso!!");
+        } else {
+          alert(error.message);
+        }
+      }
+      );
   };
 
   return(
@@ -78,14 +93,17 @@ const Page3 = ({ navigation }) => {
           />
         </View>
         <TextInput placeholder="*********" style={styles.textInput} 
-         value={ password}
-         onChangeText={text => setPassword(text)}
-          secureTextEntry
+          value={ password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry = {!showPassword}
         />
-        <Image
+        <MaterialCommunityIcons
           style={styles.olho}
-          source={require("../../Imagens/olho.png")}
-        ></Image>
+          name={showPassword ? 'eye-off' : 'eye'}
+          onPress={handleShowPass}
+          size={20}
+          
+        />
       </View>
       <View style={styles.botoes}>
       <TouchableOpacity
