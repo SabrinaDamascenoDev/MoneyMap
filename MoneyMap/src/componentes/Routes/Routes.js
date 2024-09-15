@@ -7,6 +7,7 @@ import Page2 from '../Login/Login';
 import Page3 from '../Registre-se/Registre-se';
 import Page5 from '../Home/Home';
 import LoadingScreen from '../Loading/LoadingScreen'; 
+import Page6 from '../MenuNavegacao/MenuNavegacao';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ function Routes() {
         ) : (
           <>
             <Stack.Screen name="Inicial" component={Page1} />
+            <Stack.Screen name="Menu" component={Page6} />
             <Stack.Screen name="Login" component={Page2} />
             <Stack.Screen name="Registre-se" component={Page3} />
           </>

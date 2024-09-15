@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { auth } from '../FirebaseConfig/FirebaseConfig';
 import { NavigationContainer } from '@react-navigation/native';
+import Page6 from '../MenuNavegacao/MenuNavegacao';
 
 const Page5 = ({navigation}) => {
 
@@ -19,6 +20,8 @@ const Page5 = ({navigation}) => {
     <TouchableOpacity style={styles.BtnSair} onPress={handleSingOut}>
       <Text>Sair</Text>
     </TouchableOpacity>
+
+    <Page6 />
   </View>
 )};
 
