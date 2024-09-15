@@ -212,20 +212,20 @@ const styles = StyleSheet.create({
     width: "85%",
     textAlign: "center",
     alignItems: 'center',
-    height: 50, // Defina uma altura fixa
+    height: 50, 
     justifyContent: "center",
     marginTop: 40,
     borderRadius: 25,
   },
   textoBtn: {
     fontSize: 20,
-    color: '#fff', // Adicione cor ao texto
+    color: '#fff', 
   },
   linha: {
-    height: 1, // Espessura da linha
-    width: '30%', // Largura da linha (ajuste conforme necessário)
-    backgroundColor: 'gray', // Cor da linha
-    marginVertical: 10, // Margem acima e abaixo da linha
+    height: 1, 
+    width: '30%', 
+    backgroundColor: 'gray', 
+    marginVertical: 10, 
   },
   linhaGoogle:{
     display: 'flex',
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     width: "85%",
     textAlign: "center",
     alignItems: 'center',
-    height: 50, // Defina uma altura fixa
+    height: 50, 
     justifyContent: "center",
     marginTop: 40,
     borderRadius: 25,
