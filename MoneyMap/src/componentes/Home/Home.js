@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: "85%",
     textAlign: "center",
     alignItems: 'center',
-    height: 50, // Defina uma altura fixa
+    height: 50,
     justifyContent: "center",
     marginTop: 40,
     borderRadius: 25,
